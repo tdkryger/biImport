@@ -10,7 +10,7 @@ namespace BIDataImport
 {
     class Program
     {
-        private static MySqlConnection _mySqlConnection;
+        
 
         static void Main(string[] args)
         {
@@ -31,28 +31,14 @@ namespace BIDataImport
             Console.ReadLine();
         }
 
-        static MySqlConnection getMySqlConnection()
-        {
-            if (_mySqlConnection == null)
-            {
-                _mySqlConnection =
-                    new MySqlConnection("Server=77.66.48.115;Database=cluster_b;Uid=cluster_b;Pwd=password;CharSet=utf8;");
-                _mySqlConnection.Open();
-            }
 
-            return _mySqlConnection;
-        }
-
-        static void handleLogging(string data)
-        {
-            Console.WriteLine("ERROR: " + data);
-        }
 
         static void importZipCodes()
         {
             if (!File.Exists(@"postnummer_data.csv"))
             {
-                handleLogging("postnummer_data.csv not found");
+
+                clShared.SharedInfo.handleLogging("postnummer_data.csv not found");
                 return;
             }
             foreach (var line in File.ReadLines(@"postnummer_data.csv"))
@@ -70,7 +56,7 @@ namespace BIDataImport
                         city = parts[2];
                         using (MySqlCommand cmd = new MySqlCommand())
                         {
-                            cmd.Connection = getMySqlConnection();
+                            cmd.Connection = clShared.SharedInfo.getMySqlConnection();
                             //todo: handle duplicates this way?
                             try
                             {
@@ -85,18 +71,18 @@ namespace BIDataImport
                             }
                             catch (Exception ex)
                             {
-                                handleLogging("insert data error: " + line + " (" + ex.Message + ")");
+                                clShared.SharedInfo.handleLogging("insert data error: " + line + " (" + ex.Message + ")");
                             }
                         }
                     }
                     else
                     {
-                        handleLogging("PK conversion error" + line);
+                        clShared.SharedInfo.handleLogging("PK conversion error" + line);
                     }
                 }
                 else
                 {
-                    handleLogging("part length" + line);
+                    clShared.SharedInfo.handleLogging("part length" + line);
                 }
             }
 
@@ -107,7 +93,7 @@ namespace BIDataImport
         {
             if (!File.Exists(@"product_data.csv"))
             {
-                handleLogging("product_data.csv not found");
+                clShared.SharedInfo.handleLogging("product_data.csv not found");
                 return;
             }
             bool firstLine = true;
@@ -127,7 +113,7 @@ namespace BIDataImport
                                 //todo: handle duplicates this way?
                                 try
                                 {
-                                    cmd.Connection = getMySqlConnection();
+                                    cmd.Connection = clShared.SharedInfo.getMySqlConnection();
                                     cmd.CommandText = "INSERT INTO `bi_Products` (`id`,`name`,`createDate`,`createdBy`) VALUES (@id,@name,@when,@who) "
                                                       + "ON DUPLICATE KEY UPDATE name=@name, createDate=@when, createdBy=@who;";
                                     cmd.Parameters.AddWithValue("id", id);
@@ -138,18 +124,18 @@ namespace BIDataImport
                                 }
                                 catch (Exception ex)
                                 {
-                                    handleLogging("insert data error: " + line + " (" + ex.Message + ")");
+                                    clShared.SharedInfo.handleLogging("insert data error: " + line + " (" + ex.Message + ")");
                                 }
                             }
                         }
                         else
                         {
-                            handleLogging("PK conversion error" + line);
+                            clShared.SharedInfo.handleLogging("PK conversion error" + line);
                         }
                     }
                     else
                     {
-                        handleLogging("part length" + line);
+                        clShared.SharedInfo.handleLogging("part length" + line);
                     }
                 }
                 firstLine = false;
@@ -160,7 +146,7 @@ namespace BIDataImport
         {
             if (!File.Exists(@"kunde_data.csv"))
             {
-                handleLogging("kunde_data.csv not found");
+                clShared.SharedInfo.handleLogging("kunde_data.csv not found");
                 return;
             }
             bool firstLine = false;
@@ -180,7 +166,7 @@ namespace BIDataImport
                                 //todo: handle duplicates this way?
                                 try
                                 {
-                                    cmd.Connection = getMySqlConnection();
+                                    cmd.Connection = clShared.SharedInfo.getMySqlConnection();
                                     cmd.CommandText = "INSERT INTO `bi_Customers`(`id`,`name`,`createDate`,`createdBy`) VALUES (@id,@name,@when,@who) "
                                                       + "ON DUPLICATE KEY UPDATE name=@name, createDate=@when, createdBy=@who;";
                                     cmd.Parameters.AddWithValue("id", id);
@@ -191,18 +177,18 @@ namespace BIDataImport
                                 }
                                 catch (Exception ex)
                                 {
-                                    handleLogging("insert data error: " + line + " (" + ex.Message + ")");
+                                    clShared.SharedInfo.handleLogging("insert data error: " + line + " (" + ex.Message + ")");
                                 }
                             }
                         }
                         else
                         {
-                            handleLogging("PK conversion error" + line);
+                            clShared.SharedInfo.handleLogging("PK conversion error" + line);
                         }
                     }
                     else
                     {
-                        handleLogging("part length" + line);
+                        clShared.SharedInfo.handleLogging("part length" + line);
                     }
                 }
                 firstLine = false;
@@ -213,7 +199,7 @@ namespace BIDataImport
         {
             if (!File.Exists(@"suppliers_Data.csv"))
             {
-                handleLogging("suppliers_Data.csv not found");
+                clShared.SharedInfo.handleLogging("suppliers_Data.csv not found");
                 return;
             }
             bool firstLine = false;
@@ -233,7 +219,7 @@ namespace BIDataImport
                                 //todo: handle duplicates this way?
                                 try
                                 {
-                                    cmd.Connection = getMySqlConnection();
+                                    cmd.Connection = clShared.SharedInfo.getMySqlConnection();
                                     cmd.CommandText = "INSERT INTO `bi_Suppliers` (`id`,`name`,`createDate`,`createdBy`) VALUES (@id,@name,@when,@who) "
                                                       + "ON DUPLICATE KEY UPDATE name=@name, createDate=@when, createdBy=@who;";
                                     cmd.Parameters.AddWithValue("id", id);
@@ -244,18 +230,18 @@ namespace BIDataImport
                                 }
                                 catch (Exception ex)
                                 {
-                                    handleLogging("insert data error: " + line + " (" + ex.Message + ")");
+                                    clShared.SharedInfo.handleLogging("insert data error: " + line + " (" + ex.Message + ")");
                                 }
                             }
                         }
                         else
                         {
-                            handleLogging("PK conversion error" + line);
+                            clShared.SharedInfo.handleLogging("PK conversion error" + line);
                         }
                     }
                     else
                     {
-                        handleLogging("part length" + line);
+                        clShared.SharedInfo.handleLogging("part length" + line);
                     }
                 }
                 firstLine = false;
@@ -266,7 +252,7 @@ namespace BIDataImport
         {
             if (!File.Exists(@"productcategory_data.csv"))
             {
-                handleLogging("productcategory_data.csv not found");
+                clShared.SharedInfo.handleLogging("productcategory_data.csv not found");
                 return;
             }
             bool firstLine = false;
@@ -286,7 +272,7 @@ namespace BIDataImport
                                 //todo: handle duplicates this way?
                                 try
                                 {
-                                    cmd.Connection = getMySqlConnection();
+                                    cmd.Connection = clShared.SharedInfo.getMySqlConnection();
                                     cmd.CommandText = "INSERT INTO `bi_ProductCategories` (`id`,`productCategory`,`createDate`,`createdBy`) VALUES (@id,@productCategory,@when,@who) "
                                                       + "ON DUPLICATE KEY UPDATE productCategory=@productCategory, createDate=@when, createdBy=@who;";
                                     cmd.Parameters.AddWithValue("id", id);
@@ -297,18 +283,18 @@ namespace BIDataImport
                                 }
                                 catch (Exception ex)
                                 {
-                                    handleLogging("insert data error: " + line + " (" + ex.Message + ")");
+                                    clShared.SharedInfo.handleLogging("insert data error: " + line + " (" + ex.Message + ")");
                                 }
                             }
                         }
                         else
                         {
-                            handleLogging("PK conversion error" + line);
+                            clShared.SharedInfo.handleLogging("PK conversion error" + line);
                         }
                     }
                     else
                     {
-                        handleLogging("part length" + line);
+                        clShared.SharedInfo.handleLogging("part length" + line);
                     }
                 }
                 firstLine = false;
@@ -319,13 +305,14 @@ namespace BIDataImport
         {
             if (!File.Exists(@"order_data.csv"))
             {
-                handleLogging("order_data.csv not found");
+                clShared.SharedInfo.handleLogging("order_data.csv not found");
                 return;
             }
             bool firstLine = true;
             foreach (var line in File.ReadLines(@"order_data.csv"))
             {
-                int zipId=0;
+                int orderId = 0;
+                int zipId = 0;
                 int categoryId = 0;
                 int customerId = 0;
                 int productId = 0;
@@ -339,15 +326,15 @@ namespace BIDataImport
                     if (parts.Length == 8)
                     {
                         bool conversionError = true;
-
-                        if (decimal.TryParse(parts[7], out sum))
-                            if (int.TryParse(parts[6], out count))
-                                if (int.TryParse(parts[1], out customerId))
-                                    if (int.TryParse(parts[2], out zipId))
-                                        if (int.TryParse(parts[3], out productId))
-                                            if (int.TryParse(parts[4], out categoryId))
-                                                if (int.TryParse(parts[5], out supplierId))
-                                                    conversionError = false;
+                        if (int.TryParse(parts[0], out orderId))
+                            if (decimal.TryParse(parts[7], out sum))
+                                if (int.TryParse(parts[6], out count))
+                                    if (int.TryParse(parts[1], out customerId))
+                                        if (int.TryParse(parts[2], out zipId))
+                                            if (int.TryParse(parts[3], out productId))
+                                                if (int.TryParse(parts[4], out categoryId))
+                                                    if (int.TryParse(parts[5], out supplierId))
+                                                        conversionError = false;
 
                         if (!conversionError)
                         {
@@ -356,12 +343,13 @@ namespace BIDataImport
                                 //todo: handle duplicates this way?
                                 try
                                 {
-                                    cmd.Connection = getMySqlConnection();
-                                    cmd.CommandText = "INSERT INTO `bi_TotalSales` (`zipId`,`categoryId`,`customerId`,`productId`,`supplierId`,`sales`,`units`,`createDate`,`createdBy`) "
+                                    cmd.Connection = clShared.SharedInfo.getMySqlConnection();
+                                    cmd.CommandText = "INSERT INTO `bi_TotalSales` (`orderId`,`zipId`,`categoryId`,`customerId`,`productId`,`supplierId`,`sales`,`units`,`createDate`,`createdBy`) "
                                                       +
-                                                      " VALUES (@zipId,@categoryId,@customerId,@productId,@supplierId,@sales,@units,@when,@who) "
+                                                      " VALUES (@orderId,@zipId,@categoryId,@customerId,@productId,@supplierId,@sales,@units,@when,@who) "
                                                       +
                                                       " ON DUPLICATE KEY UPDATE sales=@sales, units=@units, createDate=@when, createdBy=@who;";
+                                    cmd.Parameters.AddWithValue("orderId", orderId);
                                     cmd.Parameters.AddWithValue("zipId", zipId);
                                     cmd.Parameters.AddWithValue("categoryId", categoryId);
                                     cmd.Parameters.AddWithValue("customerId", customerId);
@@ -375,18 +363,18 @@ namespace BIDataImport
                                 }
                                 catch (Exception ex)
                                 {
-                                    handleLogging("insert data error: " + line + " (" + ex.Message + ")");
+                                    clShared.SharedInfo.handleLogging("insert data error: " + line + " (" + ex.Message + ")");
                                 }
                             }
                         }
                         else
                         {
-                            handleLogging("Conversion error" + line);
+                            clShared.SharedInfo.handleLogging("Conversion error" + line);
                         }
                     }
                     else
                     {
-                        handleLogging("part length" + line);
+                        clShared.SharedInfo.handleLogging("part length" + line);
                     }
                 }
                 firstLine = false;

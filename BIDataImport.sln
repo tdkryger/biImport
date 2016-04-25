@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIDataImport", "BIDataImport\BIDataImport.csproj", "{C85B029D-C886-4585-9FA1-0B67619EFA85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIImportProducts", "BIImportProducts\BIImportProducts.csproj", "{44EE0366-A6C1-44DA-90D5-6AE3EBA324C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clShared", "clShared\clShared.csproj", "{0907ECC4-562A-4E73-9E45-4E5FFDA3747F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{C85B029D-C886-4585-9FA1-0B67619EFA85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C85B029D-C886-4585-9FA1-0B67619EFA85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C85B029D-C886-4585-9FA1-0B67619EFA85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44EE0366-A6C1-44DA-90D5-6AE3EBA324C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44EE0366-A6C1-44DA-90D5-6AE3EBA324C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44EE0366-A6C1-44DA-90D5-6AE3EBA324C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44EE0366-A6C1-44DA-90D5-6AE3EBA324C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0907ECC4-562A-4E73-9E45-4E5FFDA3747F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0907ECC4-562A-4E73-9E45-4E5FFDA3747F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0907ECC4-562A-4E73-9E45-4E5FFDA3747F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0907ECC4-562A-4E73-9E45-4E5FFDA3747F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
