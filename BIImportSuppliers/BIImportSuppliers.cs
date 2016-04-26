@@ -46,7 +46,7 @@ namespace BIImportSuppliers
                                     cmd.Parameters.AddWithValue("id", id);
                                     cmd.Parameters.AddWithValue("name", parts[1]);
                                     cmd.Parameters.AddWithValue("when", DateTime.Now);
-                                    cmd.Parameters.AddWithValue("who", "BiDataImport");
+                                    cmd.Parameters.AddWithValue("who", "BIImportSuppliers");
                                     cmd.ExecuteNonQuery();
                                 }
                                 catch (Exception ex)

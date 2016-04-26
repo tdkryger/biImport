@@ -73,7 +73,7 @@ namespace BIImportOrderData
                                     cmd.Parameters.AddWithValue("sales", sum);
                                     cmd.Parameters.AddWithValue("units", count);
                                     cmd.Parameters.AddWithValue("when", DateTime.Now);
-                                    cmd.Parameters.AddWithValue("who", "BiDataImport");
+                                    cmd.Parameters.AddWithValue("who", "BIImportOrderData");
                                     cmd.ExecuteNonQuery();
                                 }
                                 catch (Exception ex)

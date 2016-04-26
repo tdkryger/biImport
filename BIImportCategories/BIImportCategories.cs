@@ -46,7 +46,7 @@ namespace BIImportCategories
                                     cmd.Parameters.AddWithValue("id", id);
                                     cmd.Parameters.AddWithValue("productCategory", parts[1]);
                                     cmd.Parameters.AddWithValue("when", DateTime.Now);
-                                    cmd.Parameters.AddWithValue("who", "BiDataImport");
+                                    cmd.Parameters.AddWithValue("who", "BIImportCategories");
                                     cmd.ExecuteNonQuery();
                                 }
                                 catch (Exception ex)

@@ -49,7 +49,7 @@ namespace BIImportZipCodes
                                 cmd.Parameters.AddWithValue("zipCode", zip);
                                 cmd.Parameters.AddWithValue("City", city);
                                 cmd.Parameters.AddWithValue("when", DateTime.Now);
-                                cmd.Parameters.AddWithValue("who", "BiDataImport");
+                                cmd.Parameters.AddWithValue("who", "BIImportZipCodes");
                                 cmd.ExecuteNonQuery();
                             }
                             catch (Exception ex)
