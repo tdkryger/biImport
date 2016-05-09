@@ -13,6 +13,7 @@ namespace BIImportCategories
         static void Main(string[] args)
         {
             Console.WriteLine("Importing categorys");
+            Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.Ok;
             importCategories();
         }
 
@@ -20,7 +21,8 @@ namespace BIImportCategories
         {
             if (!File.Exists(@"productcategory_data.csv"))
             {
-                clShared.SharedInfo.handleLogging("productcategory_data.csv not found");
+                clShared.SharedInfo.handleLogging("BIImportCategories", "productcategory_data.csv not found");
+                Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.FileNotFound;
                 return;
             }
             bool firstLine = false;
@@ -51,18 +53,21 @@ namespace BIImportCategories
                                 }
                                 catch (Exception ex)
                                 {
-                                    clShared.SharedInfo.handleLogging("insert data error: " + line + " (" + ex.Message + ")");
+                                    clShared.SharedInfo.handleLogging("BIImportCategories", "insert data error: " + line + " (" + ex.Message + ")");
+                                    Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.InsertError;
                                 }
                             }
                         }
                         else
                         {
-                            clShared.SharedInfo.handleLogging("PK conversion error" + line);
+                            clShared.SharedInfo.handleLogging("BIImportCategories", "PK conversion error" + line);
+                            Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.PKConversionError;
                         }
                     }
                     else
                     {
-                        clShared.SharedInfo.handleLogging("part length" + line);
+                        clShared.SharedInfo.handleLogging("BIImportCategories", "part length" + line);
+                        Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.InvalidData;
                     }
                 }
                 firstLine = false;

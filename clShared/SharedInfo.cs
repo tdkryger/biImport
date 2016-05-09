@@ -10,6 +10,15 @@ namespace clShared
 {
     public static class SharedInfo
     {
+        public enum ExitCodes
+        {
+            Ok=0,
+            FileNotFound=1,
+            InsertError=2,
+            PKConversionError=3,
+            InvalidData=4
+        };
+
         private static MySqlConnection _mySqlConnection;
 
         public enum LogTypes { Debug, Info, Error };
@@ -26,7 +35,7 @@ namespace clShared
             return _mySqlConnection;
         }
 
-        public static void handleLogging(string data, LogTypes logType = LogTypes.Error)
+        public static void handleLogging(string apppName, string data, LogTypes logType = LogTypes.Error)
         {
             string txt = string.Empty;
             switch(logType)
