@@ -27,8 +27,8 @@ namespace clShared
         {
             if (_mySqlConnection == null)
             {
-                _mySqlConnection =
-                    new MySqlConnection("Server=77.66.48.115;Database=cluster_b;Uid=cluster_b;Pwd=password;CharSet=utf8;");
+                //_mySqlConnection = new MySqlConnection("Server=77.66.48.115;Database=cluster_b;Uid=cluster_b;Pwd=password;CharSet=utf8;");
+                _mySqlConnection = new MySqlConnection("Server=localhost;Database=cluster_b;Uid=thomas;Pwd=onakit8m;CharSet=utf8;");
                 _mySqlConnection.Open();
             }
 
