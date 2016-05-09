@@ -20,7 +20,8 @@ namespace BIImportOrderData
         {
             if (!File.Exists(@"order_data.csv"))
             {
-                clShared.SharedInfo.handleLogging("order_data.csv not found");
+                clShared.SharedInfo.handleLogging("BIImportOrderData", "order_data.csv not found");
+                Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.FileNotFound;
                 return;
             }
             bool firstLine = true;
@@ -78,18 +79,21 @@ namespace BIImportOrderData
                                 }
                                 catch (Exception ex)
                                 {
-                                    clShared.SharedInfo.handleLogging("insert data error: " + line + " (" + ex.Message + ")");
+                                    clShared.SharedInfo.handleLogging("BIImportOrderData", "insert data error: " + line + " (" + ex.Message + ")");
+                                    Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.InsertError;
                                 }
                             }
                         }
                         else
                         {
-                            clShared.SharedInfo.handleLogging("Conversion error" + line);
+                            clShared.SharedInfo.handleLogging("BIImportOrderData", "Conversion error" + line);
+                            Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.PKConversionError;
                         }
                     }
                     else
                     {
-                        clShared.SharedInfo.handleLogging("part length" + line);
+                        clShared.SharedInfo.handleLogging("BIImportOrderData", "part length" + line);
+                        Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.InvalidData;
                     }
                 }
                 firstLine = false;

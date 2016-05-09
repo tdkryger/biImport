@@ -12,6 +12,7 @@ namespace BIImportProducts
     {
         static void Main(string[] args)
         {
+            Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.Ok;
             Console.WriteLine("Importing products");
             importProducts();
         }
@@ -20,7 +21,8 @@ namespace BIImportProducts
         {
             if (!File.Exists(@"product_data.csv"))
             {
-                clShared.SharedInfo.handleLogging("product_data.csv not found");
+                clShared.SharedInfo.handleLogging("BIImportProducts", "product_data.csv not found");
+                Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.FileNotFound;
                 return;
             }
             bool firstLine = true;
@@ -51,18 +53,21 @@ namespace BIImportProducts
                                 }
                                 catch (Exception ex)
                                 {
-                                    clShared.SharedInfo.handleLogging("insert data error: " + line + " (" + ex.Message + ")");
+                                    clShared.SharedInfo.handleLogging("BIImportProducts", "insert data error: " + line + " (" + ex.Message + ")");
+                                    Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.InsertError;
                                 }
                             }
                         }
                         else
                         {
-                            clShared.SharedInfo.handleLogging("PK conversion error" + line);
+                            clShared.SharedInfo.handleLogging("BIImportProducts", "PK conversion error" + line);
+                            Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.PKConversionError;
                         }
                     }
                     else
                     {
-                        clShared.SharedInfo.handleLogging("part length" + line);
+                        clShared.SharedInfo.handleLogging("BIImportProducts", "part length" + line);
+                        Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.InvalidData;
                     }
                 }
                 firstLine = false;

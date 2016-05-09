@@ -55,6 +55,30 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BIImportCategories\BIImportCategories.csproj">
+      <Project>{561718cb-eba5-4676-af0d-7246411761fa}</Project>
+      <Name>BIImportCategories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BIImportCustomers\BIImportCustomers.csproj">
+      <Project>{f04fe098-8f4f-4f56-83b2-26bc5dabb8da}</Project>
+      <Name>BIImportCustomers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BIImportOrderData\BIImportOrderData.csproj">
+      <Project>{8135dab0-9dbe-4ae9-a715-5c3e15394586}</Project>
+      <Name>BIImportOrderData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BIImportProducts\BIImportProducts.csproj">
+      <Project>{44ee0366-a6c1-44da-90d5-6ae3eba324c7}</Project>
+      <Name>BIImportProducts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BIImportSuppliers\BIImportSuppliers.csproj">
+      <Project>{c6a5cf41-84f1-429a-931b-9eb5226c8d54}</Project>
+      <Name>BIImportSuppliers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BIImportZipCodes\BIImportZipCodes.csproj">
+      <Project>{dbcf63d4-5479-4352-affd-0173d67c503a}</Project>
+      <Name>BIImportZipCodes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\clShared\clShared.csproj">
       <Project>{0907ecc4-562a-4e73-9e45-4e5ffda3747f}</Project>
       <Name>clShared</Name>

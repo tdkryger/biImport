@@ -12,6 +12,7 @@ namespace BIImportZipCodes
     {
         static void Main(string[] args)
         {
+            Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.Ok;
             Console.WriteLine("Importing zips");
             importZipCodes();
         }
@@ -21,7 +22,8 @@ namespace BIImportZipCodes
             if (!File.Exists(@"postnummer_data.csv"))
             {
 
-                clShared.SharedInfo.handleLogging("postnummer_data.csv not found");
+                clShared.SharedInfo.handleLogging("BIImportZipCodes", "postnummer_data.csv not found");
+                Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.FileNotFound;
                 return;
             }
             foreach (var line in File.ReadLines(@"postnummer_data.csv"))
@@ -54,18 +56,21 @@ namespace BIImportZipCodes
                             }
                             catch (Exception ex)
                             {
-                                clShared.SharedInfo.handleLogging("insert data error: " + line + " (" + ex.Message + ")");
+                                clShared.SharedInfo.handleLogging("BIImportZipCodes", "insert data error: " + line + " (" + ex.Message + ")");
+                                Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.InsertError;
                             }
                         }
                     }
                     else
                     {
-                        clShared.SharedInfo.handleLogging("PK conversion error" + line);
+                        clShared.SharedInfo.handleLogging("BIImportZipCodes", "PK conversion error" + line);
+                        Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.PKConversionError;
                     }
                 }
                 else
                 {
-                    clShared.SharedInfo.handleLogging("part length" + line);
+                    clShared.SharedInfo.handleLogging("BIImportZipCodes", "part length" + line);
+                    Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.InvalidData;
                 }
             }
 

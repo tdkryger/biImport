@@ -12,6 +12,7 @@ namespace BIImportSuppliers
     {
         static void Main(string[] args)
         {
+            Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.Ok;
             Console.WriteLine("Importing suppliers");
             importSuppliers();
         }
@@ -20,7 +21,8 @@ namespace BIImportSuppliers
         {
             if (!File.Exists(@"suppliers_Data.csv"))
             {
-                clShared.SharedInfo.handleLogging("suppliers_Data.csv not found");
+                clShared.SharedInfo.handleLogging("BIImportSuppliers", "suppliers_Data.csv not found");
+                Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.FileNotFound;
                 return;
             }
             bool firstLine = false;
@@ -51,18 +53,21 @@ namespace BIImportSuppliers
                                 }
                                 catch (Exception ex)
                                 {
-                                    clShared.SharedInfo.handleLogging("insert data error: " + line + " (" + ex.Message + ")");
+                                    clShared.SharedInfo.handleLogging("BIImportSuppliers", "insert data error: " + line + " (" + ex.Message + ")");
+                                    Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.InsertError;
                                 }
                             }
                         }
                         else
                         {
-                            clShared.SharedInfo.handleLogging("PK conversion error" + line);
+                            clShared.SharedInfo.handleLogging("BIImportSuppliers", "PK conversion error" + line);
+                            Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.PKConversionError;
                         }
                     }
                     else
                     {
-                        clShared.SharedInfo.handleLogging("part length" + line);
+                        clShared.SharedInfo.handleLogging("BIImportSuppliers", "part length" + line);
+                        Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.InvalidData;
                     }
                 }
                 firstLine = false;

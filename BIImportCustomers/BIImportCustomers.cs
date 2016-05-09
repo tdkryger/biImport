@@ -20,7 +20,8 @@ namespace BIImportCustomers
         {
             if (!File.Exists(@"kunde_data.csv"))
             {
-                clShared.SharedInfo.handleLogging("kunde_data.csv not found");
+                clShared.SharedInfo.handleLogging("BIImportCustomers", "kunde_data.csv not found");
+                Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.FileNotFound;
                 return;
             }
             bool firstLine = false;
@@ -51,18 +52,21 @@ namespace BIImportCustomers
                                 }
                                 catch (Exception ex)
                                 {
-                                    clShared.SharedInfo.handleLogging("insert data error: " + line + " (" + ex.Message + ")");
+                                    clShared.SharedInfo.handleLogging("BIImportCustomers", "insert data error: " + line + " (" + ex.Message + ")");
+                                    Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.InsertError;
                                 }
                             }
                         }
                         else
                         {
-                            clShared.SharedInfo.handleLogging("PK conversion error" + line);
+                            clShared.SharedInfo.handleLogging("BIImportCustomers", "PK conversion error" + line);
+                            Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.PKConversionError;
                         }
                     }
                     else
                     {
-                        clShared.SharedInfo.handleLogging("part length" + line);
+                        clShared.SharedInfo.handleLogging("BIImportCustomers", "part length" + line);
+                        Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.InvalidData;
                     }
                 }
                 firstLine = false;
