@@ -86,7 +86,7 @@ namespace BIImportOrderData
                         }
                         else
                         {
-                            clShared.SharedInfo.handleLogging("BIImportOrderData", "Conversion error" + line);
+                            clShared.SharedInfo.handleLogging("BIImportOrderData", "Conversion error in line " + line);
                             Environment.ExitCode = (int)clShared.SharedInfo.ExitCodes.PKConversionError;
                         }
                     }
