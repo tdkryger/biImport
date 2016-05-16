@@ -21,15 +21,24 @@ namespace clShared
 
         private static MySqlConnection _mySqlConnection;
 
-        public enum LogTypes { Debug, Info, Error };
+        public enum LogTypes { Debug, Info, Warning, Error, Fatal };
 
         public static MySqlConnection getMySqlConnection()
         {
             if (_mySqlConnection == null)
             {
-                //_mySqlConnection = new MySqlConnection("Server=77.66.48.115;Database=cluster_b;Uid=cluster_b;Pwd=password;CharSet=utf8;");
-                _mySqlConnection = new MySqlConnection("Server=localhost;Database=cluster_b;Uid=thomas;Pwd=onakit8m;CharSet=utf8;");
-                _mySqlConnection.Open();
+                try
+                {
+                    //_mySqlConnection = new MySqlConnection("Server=77.66.48.115;Database=cluster_b;Uid=cluster_b;Pwd=password;CharSet=utf8;");
+                    _mySqlConnection = new MySqlConnection("Server=localhost;Database=cluster_b;Uid=thomas;Pwd=onakit8m;CharSet=utf8;");
+                    _mySqlConnection.Open();
+                }
+                catch(Exception ex)
+                {
+                    handleLogging("MySQL Connection", ex.Message, LogTypes.Error);
+                    throw ex;
+                }
+                
             }
 
             return _mySqlConnection;
@@ -63,7 +72,7 @@ namespace clShared
             w.Write("\r\nLog Entry : ");
             w.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
                 DateTime.Now.ToLongDateString());
-            w.WriteLine("  :");
+            w.WriteLine("");
             w.WriteLine("  :{0}", logMessage);
             w.WriteLine("-------------------------------");
         }

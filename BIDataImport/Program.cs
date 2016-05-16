@@ -15,7 +15,7 @@ namespace BIDataImport
         static void Main(string[] args)
         {
             Console.WriteLine("Running imports");
-
+            clShared.SharedInfo.handleLogging("BIDataImport", "Running imports", clShared.SharedInfo.LogTypes.Info);
 
             if (execute("BIImportCategories.exe"))
             {
@@ -37,37 +37,52 @@ namespace BIDataImport
                     }
                 }
             }
-           Console.WriteLine("Done");            
+           Console.WriteLine("Done");
+            clShared.SharedInfo.handleLogging("BIDataImport", "Done running imports", clShared.SharedInfo.LogTypes.Info);
         }
 
         static bool execute(string programName)
         {
-            clShared.SharedInfo.handleLogging("BIDataImport", "Running " + programName, clShared.SharedInfo.LogTypes.Info);
-            Console.WriteLine("Running " + programName);
-
-            clShared.SharedInfo.ExitCodes returnValue = executeAProgram(programName);
-            switch(returnValue )
+            try
             {
-                case clShared.SharedInfo.ExitCodes.FileNotFound:
-                    Console.WriteLine("FileNotFound " + programName);
-                    return false;
-                case clShared.SharedInfo.ExitCodes.InsertError:
-                    Console.WriteLine("InsertError " + programName);
-                    return false;
-                case clShared.SharedInfo.ExitCodes.InvalidData:
-                    Console.WriteLine("InvalidData " + programName);
-                    return false;
-                case clShared.SharedInfo.ExitCodes.Ok:
-                    Console.WriteLine("OK " + programName);
-                    return true;
-                case clShared.SharedInfo.ExitCodes.PKConversionError:
-                    Console.WriteLine("PKConversionError " + programName);
-                    return false;
-                default:
-                    Console.WriteLine("Unknown exitcode " + programName);
-                    return false;
-            }
+                Console.WriteLine("Running " + programName);
 
+                clShared.SharedInfo.ExitCodes returnValue = executeAProgram(programName);
+
+                switch (returnValue)
+                {
+                    case clShared.SharedInfo.ExitCodes.FileNotFound:
+                        Console.WriteLine("FileNotFound " + programName);
+                        clShared.SharedInfo.handleLogging("BIDataImport", "Running " + programName + ", Exit code: " + returnValue, clShared.SharedInfo.LogTypes.Fatal);
+                        return false;
+                    case clShared.SharedInfo.ExitCodes.InsertError:
+                        Console.WriteLine("InsertError " + programName);
+                        clShared.SharedInfo.handleLogging("BIDataImport", "Running " + programName + ", Exit code: " + returnValue, clShared.SharedInfo.LogTypes.Warning);
+                        return false;
+                    case clShared.SharedInfo.ExitCodes.InvalidData:
+                        Console.WriteLine("InvalidData " + programName);
+                        clShared.SharedInfo.handleLogging("BIDataImport", "Running " + programName + ", Exit code: " + returnValue, clShared.SharedInfo.LogTypes.Warning);
+                        return false;
+                    case clShared.SharedInfo.ExitCodes.Ok:
+                        Console.WriteLine("OK " + programName);
+                        clShared.SharedInfo.handleLogging("BIDataImport", "Running " + programName + ", Exit code: " + returnValue, clShared.SharedInfo.LogTypes.Info);
+                        return true;
+                    case clShared.SharedInfo.ExitCodes.PKConversionError:
+                        Console.WriteLine("PKConversionError " + programName);
+                        clShared.SharedInfo.handleLogging("BIDataImport", "Running " + programName + ", Exit code: " + returnValue, clShared.SharedInfo.LogTypes.Warning);
+                        return false;
+                    default:
+                        Console.WriteLine("Unknown exitcode " + programName);
+                        clShared.SharedInfo.handleLogging("BIDataImport", "Running " + programName + ", Exit code: " + returnValue, clShared.SharedInfo.LogTypes.Warning);
+                        return false;
+                }
+            }
+            catch(Exception ex)
+            {
+                clShared.SharedInfo.handleLogging("Main Import Runner", ex.Message, clShared.SharedInfo.LogTypes.Fatal);
+                return false;
+
+            }
 
         }
 
